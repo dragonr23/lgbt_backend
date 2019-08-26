@@ -234,7 +234,7 @@ def retrievemessage():
     reciever_id = request.headers.get('reciever_id')
     message = request.headers.get('message')
 
-    results = Message.query.filter_by(user_id=user_id).all()
+    results = Messages.query.filter_by(reciever_id=reciever_id).all()
 
 
     messages = []
