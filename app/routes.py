@@ -137,12 +137,14 @@ def retrieve():
             'religion': result.religion
         }
 
-        return jsonify({
-            'success': 'Retrieved Users',
-            'users': users
-        })
-
         users.append(user)
+
+    return jsonify({
+        'success': 'Retrieved Users',
+        'users': users
+    })
+
+
 
     else:
 
