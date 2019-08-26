@@ -1,6 +1,6 @@
 from app import app, db
 from flask import request, jsonify
-from app.models import User
+from app.models import User, Messages
 import time
 import jwt
 
@@ -112,6 +112,7 @@ def data():
 
 @app.route('/api/retrieve', methods=['GET'])
 def retrieve():
+    id = request.headers.get('id')
     username = request.headers.get('username')
     email = request.headers.get('email')
     zipcode = request.headers.get('zipcode')
@@ -129,6 +130,7 @@ def retrieve():
 
 
         user = {
+            'id': result.id,
             'username': result.username,
             'email': result.email,
             'zipcode': result.zipcode,
@@ -179,6 +181,7 @@ def retrieve():
 
         for result in results:
             user = {
+                'id': result.id,
                 'username': result.username,
                 'email': result.email,
                 'zipcode': result.zipcode,
@@ -192,4 +195,58 @@ def retrieve():
         return jsonify({
             'success': 'Retrieved Events',
             'users': users
+            })
+
+
+@app.route('/api/message', methods=['POST'])
+def message():
+    try:
+
+        message = Message(message_id=message_id,date_sent=date_sent,user_id=user_id,reciever_id=reciever_id,message=message)
+
+
+
+        db.session.add(message)
+        db.session.commit()
+
+        return jsonify({'message': 'success'})
+
+    except:
+        return jsonify({'message': 'Was unable to send a message.'})
+
+
+@app.route('/api/retrievemessage', methods=['GET'])
+def retrievemessage():
+
+
+    message_id = request.headers.get('message_id')
+    date_sent = request.headers.get('date_sent')
+    user_id = request.headers.get('user_id')
+    reciever_id = request.headers.get('reciever_id')
+    message = request.headers.get('message')
+
+    results = Message.query.filter_by(user_id=user_id).all()
+
+
+    messages = []
+    if results == None:
+        return jsonfiy({'success': 'No Messages Found'})
+
+
+
+        for result in results:
+            message = {
+                'message_id': result.message_id,
+                'date_sent': result.date_sent,
+                'user_id': result.user_id,
+                'reciever_id': result.reciever_id,
+                'message': result.message,
+                'religion': result.religion
+            }
+
+            messsages.append(message)
+
+        return jsonify({
+            'success': 'messages',
+            'messages': messages
             })
