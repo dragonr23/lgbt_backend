@@ -139,7 +139,7 @@ def retrieve():
 
         return jsonify({
             'success': 'Retrieved Users',
-            'users': user
+            'users': users
         })
 
         users.append(user)
