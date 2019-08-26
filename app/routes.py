@@ -119,13 +119,15 @@ def retrieve():
     gender = request.headers.get('gender')
     religion = request.headers.get('religion')
 
+
+    users = []
     if username:
         result = User.query.filter_by(username=username).first()
 
         if result == None:
             return jsonify({'success': 'No Users Found'})
 
-    users = []
+
         user = {
             'username': result.username,
             'email': result.email,
@@ -137,7 +139,7 @@ def retrieve():
 
         return jsonify({
             'success': 'Retrieved Users',
-            'user': user
+            'users': user
         })
 
         users.append(user)
