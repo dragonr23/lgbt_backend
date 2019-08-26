@@ -211,7 +211,7 @@ def message():
 
 
 
-        message = Messages(date_sent=date_sent,user_id=user_id,reciever_id=reciever_id,message=message)
+        message=Messages(date_sent=date_sent,user_id=user_id,reciever_id=reciever_id,message=message)
 
 
 
