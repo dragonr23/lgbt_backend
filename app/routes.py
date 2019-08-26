@@ -202,7 +202,16 @@ def retrieve():
 def message():
     try:
 
-        message = Message(message_id=message_id,date_sent=date_sent,user_id=user_id,reciever_id=reciever_id,message=message)
+        date_sent = request.headers.get('date_sent')
+        user_id = request.headers.get('user_id')
+        reciever_id = request.headers.get('reciever_id')
+        message = request.headers.get('message')
+
+
+
+
+
+        message = Message(date_sent=date_sent,user_id=user_id,reciever_id=reciever_id,message=message)
 
 
 
