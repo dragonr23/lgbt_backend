@@ -67,7 +67,7 @@ def login():
 
         #create a token for that user and return it
 
-        return jsonify({ 'message' : 'success', 'token': user.get_token()})
+        return jsonify({ 'message' : 'success', 'username': user.username, 'token': user.get_token()})
 
     except:
         return jsonify({'message': 'Error #003: Failure to login'})
@@ -200,26 +200,28 @@ def retrieve():
 
 @app.route('/api/message', methods=['POST'])
 def message():
+    try:
 
-    date_sent = request.headers.get('date_sent')
-    user_id = request.headers.get('user_id')
-    reciever_id = request.headers.get('reciever_id')
-    message = request.headers.get('message')
-
-
-
-
-
-    message=Messages(date_sent=date_sent,user_id=user_id,reciever_id=reciever_id,message=message)
+        date_sent = request.headers.get('date_sent')
+        user_id = request.headers.get('user_id')
+        reciever_id = request.headers.get('reciever_id')
+        message = request.headers.get('message')
 
 
 
-    db.session.add(message)
-    db.session.commit()
-
-    return jsonify({'message': 'success'})
 
 
+        message=Messages(date_sent=date_sent,user_id=user_id,reciever_id=reciever_id,message=message)
+
+
+
+        db.session.add(message)
+        db.session.commit()
+
+        return jsonify({'message': 'success'})
+
+    except:
+        return jsonify({'message': 'Was unable to send a message.'})
 
 
 @app.route('/api/retrievemessage', methods=['GET'])
