@@ -1,6 +1,6 @@
 from app import app, db
 from flask import request, jsonify
-from app.models import User, Messages
+from app.models import User, Messages, Room
 import time
 import jwt
 
@@ -259,3 +259,47 @@ def retrievemessage():
             'success': 'messages',
             'messages': messages
             })
+
+@app.route('/api/saveroom', methods=['POST'])
+def saveroom():
+    room = request.headers.get('room')
+    user1 = request.headers.get('user1')
+    user2 = request.headers.get('user2')
+
+
+    chat = Room(room=room,user1=user1,user2=user2)
+
+    db.session.add(chat)
+    db.session.commit()
+
+@app.route('/api/retrieveroom', methods=['GET'])
+def retrieveroom():
+    room = request.headers.get('room')
+    user1 = request.headers.get('user1')
+    user2 = request.headers.get('user2')
+
+    if not user1 or not user2:
+        return jsonify({ 'success': 'User has no chats'})
+    elif user1:
+        results = Room.query.filter_by(user1=user1).all()
+    elif user2:
+        results = Room.query.filter_by(user2=user2).all()
+
+    if results == []:
+        return jsonify({ 'success': 'No Chat Rooms'})
+
+    rooms = []
+
+    for result in results:
+        room = {
+            'room': result.room,
+            'user1': result.user1,
+            'user2': result.user2
+        }
+
+        rooms.append(room)
+
+    return jsonfiy({
+        'success': 'Retrieved Rooms',
+        'rooms': rooms
+    })

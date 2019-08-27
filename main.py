@@ -1,10 +1,10 @@
 from app import app, db
-from app.models import User, Messages
+from app.models import User, Messages, Room
 import os
 
 @app.shell_context_processor
 def make_shell_context():
-    return { 'db': db, 'User': User, 'Messages': Messages }
+    return { 'db': db, 'User': User, 'Messages': Messages, 'Room': Room }
 
 
 if __name__ == '__main__':

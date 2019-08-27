@@ -56,3 +56,9 @@ class Messages(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     reciever_id = db.Column(db.Integer)
     message = db.Column(db.String(500))
+
+class Room(db.Model):
+    room_id = db.Column(db.Integer, primary_key=True)
+    room = db.Column(db.String(100))
+    user1 = db.Column(db.String(50))
+    user2 = db.Column(db.String(50))
