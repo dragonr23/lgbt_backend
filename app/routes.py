@@ -200,28 +200,26 @@ def retrieve():
 
 @app.route('/api/message', methods=['POST'])
 def message():
-    try:
 
-        date_sent = request.headers.get('date_sent')
-        user_id = request.headers.get('user_id')
-        reciever_id = request.headers.get('reciever_id')
-        message = request.headers.get('message')
-
+    date_sent = request.headers.get('date_sent')
+    user_id = request.headers.get('user_id')
+    reciever_id = request.headers.get('reciever_id')
+    message = request.headers.get('message')
 
 
 
 
-        message=Messages(date_sent=date_sent,user_id=user_id,reciever_id=reciever_id,message=message)
+
+    message=Messages(date_sent=date_sent,user_id=user_id,reciever_id=reciever_id,message=message)
 
 
 
-        db.session.add(message)
-        db.session.commit()
+    db.session.add(message)
+    db.session.commit()
 
-        return jsonify({'message': 'success'})
+    return jsonify({'message': 'success'})
 
-    except:
-        return jsonify({'message': 'Was unable to send a message.'})
+
 
 
 @app.route('/api/retrievemessage', methods=['GET'])
