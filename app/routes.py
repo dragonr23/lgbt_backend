@@ -262,15 +262,25 @@ def retrievemessage():
 
 @app.route('/api/saveroom', methods=['POST'])
 def saveroom():
-    room = request.headers.get('room')
-    user1 = request.headers.get('user1')
-    user2 = request.headers.get('user2')
+
+    try:
+        room = request.headers.get('room')
+        user1 = request.headers.get('user1')
+        user2 = request.headers.get('user2')
 
 
-    chat = Room(room=room,user1=user1,user2=user2)
+        chat = Room(room=room,user1=user1,user2=user2)
 
-    db.session.add(chat)
-    db.session.commit()
+        db.session.add(chat)
+        db.session.commit()
+
+        return jsonify({
+            'success': 'Chat Created'
+        })
+    except:
+        return jsonify({
+            'error': 'Chat Not Created'
+        })
 
 @app.route('/api/retrieveroom', methods=['GET'])
 def retrieveroom():
@@ -278,7 +288,7 @@ def retrieveroom():
     user1 = request.headers.get('user1')
     user2 = request.headers.get('user2')
 
-    if not user1 or not user2:
+    if not user1 and not user2:
         return jsonify({ 'success': 'User has no chats'})
     elif user1:
         results = Room.query.filter_by(user1=user1).all()
@@ -299,7 +309,7 @@ def retrieveroom():
 
         rooms.append(room)
 
-    return jsonfiy({
+    return jsonify({
         'success': 'Retrieved Rooms',
         'rooms': rooms
     })
