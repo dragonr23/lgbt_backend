@@ -50,12 +50,14 @@ class User(UserMixin, db.Model):
 
         return User.query.get(id)
 
-class Messages(db.Model):
-    message_id = db.Column(db.Integer, primary_key=True)
-    date_sent = db.Column(db.DateTime, default=datetime.now().date())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    reciever_id = db.Column(db.Integer)
-    message = db.Column(db.String(500))
+#potential database in replace of the scaledrone database way of saving messages
+
+# class Messages(db.Model):
+#     message_id = db.Column(db.Integer, primary_key=True)
+#     date_sent = db.Column(db.DateTime, default=datetime.now().date())
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+#     reciever_id = db.Column(db.Integer)
+#     message = db.Column(db.String(500))
 
 class Room(db.Model):
     room_id = db.Column(db.Integer, primary_key=True)

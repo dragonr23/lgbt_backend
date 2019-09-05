@@ -12,10 +12,9 @@ def index():
 def register():
     try:
 
-        #i believe this is what will be sent through the headers... may disrupt
+
         token = request.headers.get('token')
 
-        print(token)
 
         #decode the token back to a dictionary
 
@@ -94,11 +93,10 @@ def data():
 
         data = {
 
-        #you must query all of this data
             'logged - in' : 'yes'
         }
 
-        #check out the event scheduler and how we sent the data
+
 
         return jsonify({ 'info': data })
 
